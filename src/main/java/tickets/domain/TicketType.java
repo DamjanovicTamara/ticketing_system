@@ -3,7 +3,7 @@ package tickets.domain;
 public enum TicketType {
 
     LIVE("Live"),
-    PRE_MATCH("PreMatch"),
+    PREMATCH("PreMatch"),
     VIRTUAL("Virtual");
 
 

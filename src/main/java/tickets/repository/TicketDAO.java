@@ -20,8 +20,10 @@ public class TicketDAO extends AbstractDAO<Ticket> {
      * @return list of all tickets stored in the database
      */
     public List<Ticket> findAll() {
-        return list((CriteriaQuery<Ticket>) namedQuery("tickets.domain.Ticket.findAll"));
-    }
+
+            return list(namedTypedQuery("tickets.domain.Ticket.findAll"));
+        }
+
 
     /**
      * Method looks for an ticket by id.
@@ -30,8 +32,12 @@ public class TicketDAO extends AbstractDAO<Ticket> {
      * @return Optional containing the found ticket or an empty Optional
      * otherwise.
      */
-    public Optional<Ticket> findById(long id) {
+    public Optional<Ticket> findByTicketId(long id) {
         return Optional.fromNullable(get(id));
+    }
+
+    public Ticket create(Ticket ticket) {
+        return persist(ticket);
     }
 
 }

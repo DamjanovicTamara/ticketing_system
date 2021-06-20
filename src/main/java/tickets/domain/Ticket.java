@@ -13,7 +13,7 @@ public class Ticket {
 
     @Id
     @GeneratedValue
-    private long ticketId;
+    private long ticket_id;
 
     @ManyToOne
     @JoinColumn(name="player_id")
@@ -28,11 +28,11 @@ public class Ticket {
     @Column(name="bet_amount")
     private float betAmount;
 
-    @Column(name="winAMount")
+    @Column(name="win_amount")
     private float winAmount;
 
-    @Column(name="results")
-    private Results results;
+    @Column(name="result")
+    private Results result;
 
     @Column(name="created_on")
     private LocalDateTime timeCreated;
@@ -43,24 +43,24 @@ public class Ticket {
     public Ticket() {
     }
 
-    public Ticket(long ticketId, Player player, TicketType ticketType, float quota, float betAmount, float winAmount, Results results, LocalDateTime timeCreated, LocalDateTime timeModified) {
-        this.ticketId = ticketId;
+    public Ticket(long ticket_id, Player player, TicketType ticketType, float quota, float betAmount, float winAmount, Results result, LocalDateTime timeCreated, LocalDateTime timeModified) {
+        this.ticket_id = ticket_id;
         this.player = player;
         this.ticketType = ticketType;
         this.quota = quota;
         this.betAmount = betAmount;
         this.winAmount = winAmount;
-        this.results = results;
+        this.result = result;
         this.timeCreated = timeCreated;
         this.timeModified = timeModified;
     }
 
-    public long getTicketId() {
-        return ticketId;
+    public long getTicket_id() {
+        return ticket_id;
     }
 
-    public void setTicketId(long ticketId) {
-        this.ticketId = ticketId;
+    public void setTicket_id(long ticket_id) {
+        this.ticket_id = ticket_id;
     }
 
     public Player getPlayer() {
@@ -103,12 +103,12 @@ public class Ticket {
         this.winAmount = winAmount;
     }
 
-    public Results getResults() {
-        return results;
+    public Results getResult() {
+        return result;
     }
 
     public void setResults(Results results) {
-        this.results = results;
+        this.result = result;
     }
 
     public LocalDateTime getTimeCreated() {
@@ -132,11 +132,11 @@ public class Ticket {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ticket ticket = (Ticket) o;
-        return ticketId == ticket.ticketId && Float.compare(ticket.quota, quota) == 0 && Float.compare(ticket.betAmount, betAmount) == 0 && Float.compare(ticket.winAmount, winAmount) == 0 && Objects.equals(player, ticket.player) && ticketType == ticket.ticketType && results == ticket.results && Objects.equals(timeCreated, ticket.timeCreated) && Objects.equals(timeModified, ticket.timeModified);
+        return ticket_id == ticket.ticket_id && Float.compare(ticket.quota, quota) == 0 && Float.compare(ticket.betAmount, betAmount) == 0 && Float.compare(ticket.winAmount, winAmount) == 0 && Objects.equals(player, ticket.player) && ticketType == ticket.ticketType && result == ticket.result && Objects.equals(timeCreated, ticket.timeCreated) && Objects.equals(timeModified, ticket.timeModified);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ticketId, player, ticketType, quota, betAmount, winAmount, results, timeCreated, timeModified);
+        return Objects.hash(ticket_id, player, ticketType, quota, betAmount, winAmount, result, timeCreated, timeModified);
     }
 }

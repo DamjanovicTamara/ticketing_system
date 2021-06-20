@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<div class="container">
+    <row>
+        <div class = "three columns">
+            <h1>tickets</h1>
+            <ul>
+                {{#tickets}}<li><a href="/tickets"></a></li>{{/tickets}}
+            </ul>
+        </div>
+        <div class = "nine columns">
+            {{#ticket}}
+            <h1>Ticket by id</h1>
+            {{#ticket}}
+            {{.}}<br/>
+            {{/ticket}}
+            <br>
+            <form method="post" action="/tickets/{{id}}">
+                <textarea name="message"></textarea>
+                <br/><button>Submit</button>
+            </form>
+            {{/ticket}}
+        </div>
+    </row>
+
+</div>
+</body>
+</html>
