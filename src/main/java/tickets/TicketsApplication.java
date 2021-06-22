@@ -5,6 +5,7 @@ import io.dropwizard.client.HttpClientBuilder;
 import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
+import io.dropwizard.jersey.jackson.JsonProcessingExceptionMapper;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.apache.http.client.HttpClient;
@@ -30,6 +31,7 @@ public class TicketsApplication extends Application<TicketsConfiguration> {
         final HttpClient httpClient = new HttpClientBuilder(environment).using(ticketsConfiguration.getHttpClientConfiguration())
                 .build(getName());
         environment.jersey().register(new TicketsResource(httpClient));
+        environment.jersey().register(new JsonProcessingExceptionMapper(true));
     }
 
 

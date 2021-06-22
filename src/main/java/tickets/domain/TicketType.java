@@ -1,15 +1,14 @@
 package tickets.domain;
 
-public enum TicketType {
+public enum TicketType  {
 
     LIVE("Live"),
     PREMATCH("PreMatch"),
     VIRTUAL("Virtual");
 
-
     private  String text;
 
-    TicketType(final String text) {
+    TicketType(String text) {
         this.text = text;
     }
 

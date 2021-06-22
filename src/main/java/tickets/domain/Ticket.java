@@ -1,50 +1,58 @@
 package tickets.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.joda.time.LocalDateTime;
+
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
 @Table(name = "sport_ticket")
 @NamedQueries({
-        @NamedQuery( name = "tickets.domain.Ticket.findAll",
-                     query= "select t from Ticket t")})
+        @NamedQuery(name = "tickets.domain.Ticket.findAll",
+                query = "select t from Ticket t")})
 public class Ticket {
 
     @Id
-    @GeneratedValue
-    private long ticket_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @ManyToOne
-    @JoinColumn(name="player_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "player_id")
     private Player player;
 
-    @Column(name="ticket_type")
+    @Column(name = "ticket_type")
     private TicketType ticketType;
 
-    @Column(name="quota")
-    private float quota;
+    @Column(name = "quota")
+    private Double quota;
 
-    @Column(name="bet_amount")
-    private float betAmount;
+    @Column(name = "bet_amount")
+    private BigDecimal betAmount;
 
-    @Column(name="win_amount")
-    private float winAmount;
+    @Column(name = "win_amount")
+    private BigDecimal winAmount;
 
-    @Column(name="result")
+    @Column(name = "result")
     private Results result;
 
-    @Column(name="created_on")
+    @Column(name = "created_on")
     private LocalDateTime timeCreated;
 
-    @Column(name="modified_on")
+    @Column(name = "modified_on")
     private LocalDateTime timeModified;
 
     public Ticket() {
     }
 
-    public Ticket(long ticket_id, Player player, TicketType ticketType, float quota, float betAmount, float winAmount, Results result, LocalDateTime timeCreated, LocalDateTime timeModified) {
-        this.ticket_id = ticket_id;
+    public Ticket(TicketType ticketType) {
+        this.ticketType = ticketType;
+    }
+
+    public Ticket(Long id, Player player, TicketType ticketType, Double quota, BigDecimal betAmount, BigDecimal winAmount, Results result, LocalDateTime timeCreated, LocalDateTime timeModified) {
+        this.id = id;
         this.player = player;
         this.ticketType = ticketType;
         this.quota = quota;
@@ -55,74 +63,99 @@ public class Ticket {
         this.timeModified = timeModified;
     }
 
-    public long getTicket_id() {
-        return ticket_id;
+
+    public long getId() {
+        return id;
     }
 
-    public void setTicket_id(long ticket_id) {
-        this.ticket_id = ticket_id;
+    public void setId(long id) {
+        this.id = id;
     }
 
+    @JsonProperty
     public Player getPlayer() {
         return player;
     }
 
+    @JsonProperty
     public void setPlayer(Player player) {
         this.player = player;
     }
 
+    @JsonProperty
     public TicketType getTicketType() {
         return ticketType;
     }
 
+    @JsonProperty
     public void setTicketType(TicketType ticketType) {
         this.ticketType = ticketType;
     }
 
-    public float getQuota() {
+    @JsonProperty
+    public Double getQuota() {
         return quota;
     }
 
-    public void setQuota(float quota) {
+    @JsonProperty
+    public void setQuota(Double quota) {
         this.quota = quota;
     }
 
-    public float getBetAmount() {
+    @JsonProperty
+    @JsonFormat(shape=JsonFormat.Shape.STRING)
+    public BigDecimal getBetAmount() {
         return betAmount;
     }
 
-    public void setBetAmount(float betAmount) {
+    @JsonProperty
+    @JsonFormat(shape=JsonFormat.Shape.STRING)
+    public void setBetAmount(BigDecimal betAmount) {
         this.betAmount = betAmount;
     }
 
-    public float getWinAmount() {
+    @JsonProperty
+    @JsonFormat(shape=JsonFormat.Shape.STRING)
+    public BigDecimal getWinAmount() {
         return winAmount;
     }
 
-    public void setWinAmount(float winAmount) {
+    @JsonProperty
+    @JsonFormat(shape=JsonFormat.Shape.STRING)
+    public void setWinAmount(BigDecimal winAmount) {
         this.winAmount = winAmount;
     }
 
+    @JsonProperty
     public Results getResult() {
         return result;
     }
 
+    @JsonProperty
     public void setResults(Results results) {
         this.result = result;
     }
 
+    @JsonProperty
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     public LocalDateTime getTimeCreated() {
         return timeCreated;
     }
 
+    @JsonProperty
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     public void setTimeCreated(LocalDateTime timeCreated) {
         this.timeCreated = timeCreated;
     }
 
+    @JsonProperty
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     public LocalDateTime getTimeModified() {
         return timeModified;
     }
 
+    @JsonProperty
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     public void setTimeModified(LocalDateTime timeModified) {
         this.timeModified = timeModified;
     }
@@ -132,11 +165,11 @@ public class Ticket {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ticket ticket = (Ticket) o;
-        return ticket_id == ticket.ticket_id && Float.compare(ticket.quota, quota) == 0 && Float.compare(ticket.betAmount, betAmount) == 0 && Float.compare(ticket.winAmount, winAmount) == 0 && Objects.equals(player, ticket.player) && ticketType == ticket.ticketType && result == ticket.result && Objects.equals(timeCreated, ticket.timeCreated) && Objects.equals(timeModified, ticket.timeModified);
+        return Objects.equals(id, ticket.id) && Objects.equals(player, ticket.player) && ticketType == ticket.ticketType && Objects.equals(quota, ticket.quota) && Objects.equals(betAmount, ticket.betAmount) && Objects.equals(winAmount, ticket.winAmount) && result == ticket.result && Objects.equals(timeCreated, ticket.timeCreated) && Objects.equals(timeModified, ticket.timeModified);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ticket_id, player, ticketType, quota, betAmount, winAmount, result, timeCreated, timeModified);
+        return Objects.hash(id, player, ticketType, quota, betAmount, winAmount, result, timeCreated, timeModified);
     }
 }

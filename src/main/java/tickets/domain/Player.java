@@ -1,77 +1,91 @@
 package tickets.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name ="player")
+@Table(name = "player")
+@NamedQueries({
+        @NamedQuery(name = "tickets.domain.Player.findAll",
+                query = "select t from Player t")})
 public class Player {
 
     @Id
-    @GeneratedValue
-    private long player_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "player_id")
+    private Long playerId;
 
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
 
-    @Column(name="surname")
+    @Column(name = "surname")
     private String surname;
 
-    @Column(name="email")
+    @Column(name = "email")
     private String email;
 
     public Player() {
     }
 
-    public Player(long player_id, String name, String surname, String email) {
-        this.player_id = player_id;
+    public Player(Long playerId, String name, String surname, String email) {
+        this.playerId = playerId;
         this.name = name;
         this.surname = surname;
         this.email = email;
     }
 
-    public long getPlayer_id() {
-        return player_id;
+    public Long getPlayerId() {
+        return playerId;
     }
 
-    public void setPlayer_id(long player_id) {
-        this.player_id = player_id;
+    public void setPlayerId(Long playerId) {
+        this.playerId = playerId;
     }
 
+    @JsonProperty
     public String getName() {
         return name;
     }
 
+    @JsonProperty
     public void setName(String name) {
         this.name = name;
     }
 
+    @JsonProperty
     public String getSurname() {
         return surname;
     }
 
+    @JsonProperty
     public void setSurname(String surname) {
         this.surname = surname;
     }
 
+    @JsonProperty
     public String getEmail() {
         return email;
     }
 
+    @JsonProperty
     public void setEmail(String email) {
         this.email = email;
     }
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Player player = (Player) o;
-        return player_id == player.player_id && Objects.equals(name, player.name) && Objects.equals(surname, player.surname) && Objects.equals(email, player.email);
+        return Objects.equals(playerId, player.playerId) && Objects.equals(name, player.name) && Objects.equals(surname, player.surname) && Objects.equals(email, player.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(player_id, name, surname, email);
+        return Objects.hash(playerId, name, surname, email);
     }
 }

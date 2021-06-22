@@ -3,13 +3,12 @@ package tickets.repository;
 import io.dropwizard.hibernate.AbstractDAO;
 import io.dropwizard.logback.shaded.guava.base.Optional;
 import org.hibernate.SessionFactory;
-import tickets.domain.Ticket;
-
+import tickets.domain.Player;
 import java.util.List;
 
-public class TicketDAO extends AbstractDAO<Ticket> {
+public class PlayerDAO extends AbstractDAO<Player> {
 
-    public TicketDAO(SessionFactory sessionFactory) {
+    public PlayerDAO(SessionFactory sessionFactory) {
         super(sessionFactory);
     }
 
@@ -18,25 +17,24 @@ public class TicketDAO extends AbstractDAO<Ticket> {
      *
      * @return list of all tickets stored in the database
      */
-    public List<Ticket> findAll() {
+    public List<Player> findAll() {
 
-        return list(namedTypedQuery("tickets.domain.Ticket.findAll"));
+        return list(namedTypedQuery("tickets.domain.Player.findAll"));
     }
 
 
     /**
-     * Method looks for a ticket by id.
+     * Method looks for an ticket by id.
      *
-     * @param id the id of a ticket we are looking for.
+     * @param id the id of an ticket we are looking for.
      * @return Optional containing the found ticket or an empty Optional
      * otherwise.
      */
-    public Optional<Ticket> findByTicketId(Long id) {
+    public Optional<Player> findByPlayerId(long id) {
         return Optional.fromNullable(get(id));
     }
 
-    public Ticket create(Ticket ticket) {
-        return persist(ticket);
+    public Player create(Player player) {
+        return persist(player);
     }
-
 }
