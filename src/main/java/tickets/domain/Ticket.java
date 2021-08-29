@@ -2,6 +2,8 @@ package tickets.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import org.joda.time.LocalDateTime;
 
 import javax.persistence.*;
@@ -10,9 +12,10 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "sport_ticket")
-@NamedQueries({
-        @NamedQuery(name = "tickets.domain.Ticket.findAll",
-                query = "select t from Ticket t")})
+@TypeDef(
+        name = "pgsql_enum",
+        typeClass = PostgreSQLEnumType.class
+)
 public class Ticket {
 
     @Id
@@ -24,6 +27,8 @@ public class Ticket {
     private Player player;
 
     @Column(name = "ticket_type")
+    @Enumerated(EnumType.STRING)
+    @Type( type = "pgsql_enum" )
     private TicketType ticketType;
 
     @Column(name = "quota")
@@ -35,7 +40,9 @@ public class Ticket {
     @Column(name = "win_amount")
     private BigDecimal winAmount;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "result")
+    @Type( type = "pgsql_enum" )
     private Results result;
 
     @Column(name = "created_on")

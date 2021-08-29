@@ -1,9 +1,8 @@
 package tickets.domain;
 
 public enum TicketType  {
-
-    LIVE("Live"),
     PREMATCH("PreMatch"),
+    LIVE("Live"),
     VIRTUAL("Virtual");
 
     private  String text;
